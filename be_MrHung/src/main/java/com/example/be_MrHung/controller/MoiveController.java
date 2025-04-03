@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/movies")
@@ -19,4 +20,11 @@ public class MoiveController {
     public List<Movie> getAllMovies() {
         return movieServices.getAllMovies();
     }
+
+    @GetMapping("/findMovie/")
+    public Optional<Movie> findMovieById(@RequestParam int movie_id) {
+        return movieServices.findById(movie_id);
+    }
+
+
 }
