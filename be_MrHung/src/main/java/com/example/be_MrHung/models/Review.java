@@ -1,37 +1,44 @@
 package com.example.be_MrHung.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import java.util.Date;
 
 @Entity
 @Table(name = "reviews")
-@Data
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer reviewId;
+    @Column(name = "review_id")
+    private Long reviewId;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @Column(length = 500)
+    private String comment;
 
     @ManyToOne
     @JoinColumn(name = "movie_id", nullable = false)
     private Movie movie;
 
-    @Column(nullable = false)
-    private Integer rating;
+    // Getters and Setters
+    public Long getReviewId() {
+        return reviewId;
+    }
 
-    @Column(columnDefinition = "TEXT")
-    private String comment;
+    public void setReviewId(Long reviewId) {
+        this.reviewId = reviewId;
+    }
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "review_date")
-    private Date reviewDate;
+    public String getComment() {
+        return comment;
+    }
 
-    @PrePersist
-    protected void onCreate() {
-        reviewDate = new Date();
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
     }
 }

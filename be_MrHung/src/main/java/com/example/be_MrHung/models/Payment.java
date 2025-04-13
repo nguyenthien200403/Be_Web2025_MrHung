@@ -2,6 +2,7 @@ package com.example.be_MrHung.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+
 import java.util.Date;
 
 @Entity
@@ -9,6 +10,7 @@ import java.util.Date;
 @Data
 public class Payment {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer paymentId;
 
     @OneToOne
@@ -39,6 +41,14 @@ public class Payment {
 
     @Column(name = "bank_code", length = 50)
     private String bankCode;
+
+    public void setPaymentStatus(PaymentStatus paymentStatus) {
+        this.status = paymentStatus;
+    }
+
+    public void setPaymentTime(Date paymentTime) {
+        this.paymentTime = paymentTime;
+    }
 
     public enum PaymentMethod {
         CREDIT_CARD, BANK_TRANSFER, E_WALLET, CASH

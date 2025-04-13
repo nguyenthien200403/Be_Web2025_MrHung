@@ -1,34 +1,45 @@
 package com.example.be_MrHung.models;
 
 import jakarta.persistence.*;
-import lombok.Data;
-
-import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "genres")
-@Data
 public class Genre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer genreId;
+    @Column(name = "genre_id")
+    private Long genreId;
 
-    @Column(nullable = false, length = 100, unique = true)
+    @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(columnDefinition = "TEXT")
-    private String description;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at", updatable = false)
-    private Date createdAt;
-
     @ManyToMany(mappedBy = "genres")
-    private Set<Movie> movies;
+    private Set<Movie> movies = new HashSet<>();
 
-    @PrePersist
-    protected void onCreate() {
-        createdAt = new Date();
+    // Getters and Setters
+    public Long getGenreId() {
+        return genreId;
+    }
+
+    public void setGenreId(Long genreId) {
+        this.genreId = genreId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(Set<Movie> movies) {
+        this.movies = movies;
     }
 }

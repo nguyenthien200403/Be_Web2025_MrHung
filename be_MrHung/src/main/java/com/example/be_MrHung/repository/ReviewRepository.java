@@ -8,7 +8,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ReviewRepository extends JpaRepository<Review, Integer> {
-    List<Review> findByMovieMovieId(Integer movieId);
-    List<Review> findByUserUserId(Integer userId);
+public interface ReviewRepository extends JpaRepository<Review, Long> {
+    List<Review> findByMovieId(Long movieId);
+    List<Review> findByUserId(Long userId);
+    List<Review> findByMovieIdAndUserId(Long movieId, Long userId);
+    List<Review> findByRating(Integer rating);
+    List<Review> findByRatingBetween(Integer minRating, Integer maxRating);
 }
