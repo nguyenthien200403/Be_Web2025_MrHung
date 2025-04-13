@@ -1,21 +1,15 @@
 package com.example.be_MrHung.models;
 
 import jakarta.persistence.*;
-import lombok.*;
-import java.time.LocalDateTime;
+import lombok.Data;
+import java.util.Date;
 
 @Entity
 @Table(name = "reviews")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
+@Data
 public class Review {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "review_id")
     private Integer reviewId;
 
     @ManyToOne
@@ -26,14 +20,18 @@ public class Review {
     @JoinColumn(name = "movie_id", nullable = false)
     private Movie movie;
 
-    @Column(name = "rating", nullable = false)
+    @Column(nullable = false)
     private Integer rating;
 
-    @Column(name = "comment", columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String comment;
 
-    @Column(name = "review_date", updatable = false)
-    private LocalDateTime reviewDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "review_date")
+    private Date reviewDate;
 
-
+    @PrePersist
+    protected void onCreate() {
+        reviewDate = new Date();
+    }
 }
