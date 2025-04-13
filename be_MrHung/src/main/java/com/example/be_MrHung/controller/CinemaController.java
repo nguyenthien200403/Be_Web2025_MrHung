@@ -37,13 +37,13 @@ public class CinemaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCinema);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update-cinema/{id}")
     public ResponseEntity<Cinema> updateCinema(@PathVariable Long id, @RequestBody Cinema cinemaDetails) {
         Cinema updatedCinema = cinemaService.updateCinema(id, cinemaDetails);
         return ResponseEntity.ok(updatedCinema);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete-cinema/{id}")
     public ResponseEntity<Void> deleteCinema(@PathVariable Long id) {
         cinemaService.deleteCinema(id);
         return ResponseEntity.noContent().build();
