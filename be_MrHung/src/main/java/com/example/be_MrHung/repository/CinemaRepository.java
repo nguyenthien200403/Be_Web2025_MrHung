@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CinemaRepository extends JpaRepository<Cinema, Integer> {
+public interface CinemaRepository extends JpaRepository<Cinema, Long> {
     List<Cinema> findByCity(String city);
 }

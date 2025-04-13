@@ -1,16 +1,16 @@
 package com.example.be_MrHung.services;
-
-
 import com.example.be_MrHung.models.Cinema;
 import com.example.be_MrHung.repository.CinemaRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CinemaService {
+
     @Autowired
     private CinemaRepository cinemaRepository;
 
@@ -18,19 +18,30 @@ public class CinemaService {
         return cinemaRepository.findAll();
     }
 
-    public Optional<Cinema> getCinemaById(Integer id) {
-        return cinemaRepository.findById(id);
-    }
-
     public List<Cinema> getCinemasByCity(String city) {
         return cinemaRepository.findByCity(city);
     }
 
-    public Cinema saveCinema(Cinema cinema) {
+    public Cinema getCinemaById(Long id) {
+        return cinemaRepository.findById(id).orElseThrow();
+    }
+
+    public Cinema createCinema(Cinema cinema) {
         return cinemaRepository.save(cinema);
     }
 
-    public void deleteCinema(Integer id) {
+    public Cinema updateCinema(Long id, Cinema cinemaDetails) {
+        Cinema cinema = getCinemaById(id);
+        cinema.setName(cinemaDetails.getName());
+        cinema.setAddress(cinemaDetails.getAddress());
+        cinema.setCity(cinemaDetails.getCity());
+        cinema.setPhoneNumber(cinemaDetails.getPhoneNumber());
+        cinema.setTotalScreens(cinemaDetails.getTotalScreens());
+        cinema.onUpdate();
+        return cinemaRepository.save(cinema);
+    }
+
+    public void deleteCinema(Long id) {
         cinemaRepository.deleteById(id);
     }
 }
