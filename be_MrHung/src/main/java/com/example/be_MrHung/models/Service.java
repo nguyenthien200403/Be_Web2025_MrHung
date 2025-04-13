@@ -6,26 +6,31 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Table(name = "cinemas")
+@Table(name = "services")
 @Data
-public class Cinema {
+public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer cinemaId;
+    private Integer serviceId;
 
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String address;
+    @Column(columnDefinition = "TEXT")
+    private String description;
 
-    @Column(nullable = false, length = 50)
-    private String city;
+    @Column(nullable = false)
+    private Double price;
 
-    @Column(length = 20)
-    private String phoneNumber;
+    @Column(name = "image_url", length = 255)
+    private String imageUrl;
 
-    private Integer totalScreens;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "service_type", nullable = false)
+    private ServiceType type;
+
+    @Column(name = "is_active")
+    private Boolean isActive = true;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", updatable = false)
@@ -35,8 +40,12 @@ public class Cinema {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-    @OneToMany(mappedBy = "cinema")
-    private Set<Screen> screens;
+    @OneToMany(mappedBy = "service")
+    private Set<BookingService> bookingServices;
+
+    public enum ServiceType {
+        FOOD, BEVERAGE, COMFORT, OTHER
+    }
 
     @PrePersist
     protected void onCreate() {

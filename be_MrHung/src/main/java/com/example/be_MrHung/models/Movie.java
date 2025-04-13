@@ -1,62 +1,84 @@
 package com.example.be_MrHung.models;
 
+import com.example.be_MrHung.models.*;
 import jakarta.persistence.*;
-import lombok.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import lombok.Data;
+import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "movies")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
+@Data
 public class Movie {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "movie_id")
     private Integer movieId;
 
-    @Column(name = "title", nullable = false, length = 100)
+    @Column(nullable = false)
     private String title;
 
-    @Column(name = "description", columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "duration", nullable = false)
-    private Integer duration;
+    @Column(nullable = false)
+    private Integer duration; // in minutes
 
-    @Column(name = "release_date")
-    private LocalDate releaseDate;
+    @Temporal(TemporalType.DATE)
+    private Date releaseDate;
 
-    @Column(name = "rating", length = 10)
     private String rating;
-
-    @Column(name = "poster_url", length = 255)
     private String posterUrl;
-
-    @Column(name = "trailer_url", length = 255)
     private String trailerUrl;
 
     @Column(name = "is_now_showing")
-    private Boolean isNowShowing;
+    private Boolean isNowShowing = false;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt;
+    private Date createdAt;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private Date updatedAt;
+
+    @ManyToMany
+    @JoinTable(
+            name = "movie_genres",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
+    private Set<Genre> genres;
+
+    @ManyToMany
+    @JoinTable(
+            name = "movie_actors",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "actor_id")
+    )
+    private Set<Actor> actors;
+
+    @ManyToMany
+    @JoinTable(
+            name = "movie_directors",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "director_id")
+    )
+    private Set<Director> directors;
+
+    @OneToMany(mappedBy = "movie")
+    private Set<Showtime> showtimes;
+
+    @OneToMany(mappedBy = "movie")
+    private Set<Review> reviews;
 
     @PrePersist
     protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
+        createdAt = new Date();
+        updatedAt = new Date();
     }
 
     @PreUpdate
     protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
+        updatedAt = new Date();
     }
 }

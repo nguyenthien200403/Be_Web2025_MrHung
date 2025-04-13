@@ -1,30 +1,25 @@
 package com.example.be_MrHung.models;
 
 import jakarta.persistence.*;
-import lombok.*;
-import java.time.LocalDateTime;
+import lombok.Data;
+import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
+@Data
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
     private Integer userId;
 
-    @Column(name = "username", nullable = false, unique = true, length = 50)
+    @Column(nullable = false, length = 50, unique = true)
     private String username;
 
-    @Column(name = "password", nullable = false, length = 255)
+    @Column(nullable = false)
     private String password;
 
-    @Column(name = "email", nullable = false, unique = true, length = 100)
+    @Column(nullable = false, length = 100, unique = true)
     private String email;
 
     @Column(name = "full_name", length = 100)
@@ -33,14 +28,24 @@ public class User {
     @Column(name = "phone_number", length = 20)
     private String phoneNumber;
 
-    @Column(name = "date_of_birth")
-    private String dateOfBirth;
+    @Temporal(TemporalType.DATE)
+    private Date dateOfBirth;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private Date createdAt;
 
-    @Column(name = "is_active", nullable = false)
+    @Column(name = "is_active")
     private Boolean isActive = true;
 
+    @OneToMany(mappedBy = "user")
+    private Set<Booking> bookings;
 
+    @OneToMany(mappedBy = "user")
+    private Set<Review> reviews;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Date();
+    }
 }
