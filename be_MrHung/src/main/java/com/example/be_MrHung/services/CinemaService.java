@@ -1,5 +1,6 @@
 package com.example.be_MrHung.services;
 
+
 import com.example.be_MrHung.models.Cinema;
 import com.example.be_MrHung.repository.CinemaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import java.util.Optional;
 
 @Service
 public class CinemaService {
-
     @Autowired
     private CinemaRepository cinemaRepository;
 
@@ -22,7 +22,11 @@ public class CinemaService {
         return cinemaRepository.findById(id);
     }
 
-    public Cinema createCinema(Cinema cinema) {
+    public List<Cinema> getCinemasByCity(String city) {
+        return cinemaRepository.findByCity(city);
+    }
+
+    public Cinema saveCinema(Cinema cinema) {
         return cinemaRepository.save(cinema);
     }
 
