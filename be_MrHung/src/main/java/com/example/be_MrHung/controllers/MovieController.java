@@ -40,8 +40,8 @@ public class MovieController {
         return ResponseEntity.ok(movies);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<MovieDetailDTO> getMovieDetails(@PathVariable Long id) {
+    @GetMapping("/detail")
+    public ResponseEntity<MovieDetailDTO> getMovieDetails(@RequestParam Long id) {
         MovieDetailDTO movieDetail = movieService.getMovieDetails(id);
         return ResponseEntity.ok(movieDetail);
     }
