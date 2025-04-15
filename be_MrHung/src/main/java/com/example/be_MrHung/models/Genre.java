@@ -1,45 +1,31 @@
 package com.example.be_MrHung.models;
 
 import jakarta.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.util.Date;
+
 
 @Entity
 @Table(name = "genres")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Genre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "genre_id")
-    private Long genreId;
+    private Integer id;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 100, unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "genres")
-    private Set<Movie> movies = new HashSet<>();
+    @Column(columnDefinition = "TEXT")
+    private String description;
 
-    // Getters and Setters
-    public Long getGenreId() {
-        return genreId;
-    }
-
-    public void setGenreId(Long genreId) {
-        this.genreId = genreId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Movie> getMovies() {
-        return movies;
-    }
-
-    public void setMovies(Set<Movie> movies) {
-        this.movies = movies;
-    }
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private Date createdAt;
 }

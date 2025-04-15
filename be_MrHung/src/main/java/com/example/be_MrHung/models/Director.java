@@ -1,45 +1,36 @@
 package com.example.be_MrHung.models;
 
 import jakarta.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "directors")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Director {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "director_id")
-    private Long directorId;
+    private Integer id;
 
     @Column(nullable = false, length = 100)
     private String name;
 
-    @ManyToMany(mappedBy = "directors")
-    private Set<Movie> movies = new HashSet<>();
+    @Column(columnDefinition = "TEXT")
+    private String bio;
 
-    // Getters and Setters
-    public Long getDirectorId() {
-        return directorId;
-    }
+    @Column(name = "date_of_birth")
+    private Date dateOfBirth;
 
-    public void setDirectorId(Long directorId) {
-        this.directorId = directorId;
-    }
+    @Column(length = 50)
+    private String nationality;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Movie> getMovies() {
-        return movies;
-    }
-
-    public void setMovies(Set<Movie> movies) {
-        this.movies = movies;
-    }
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private Date createdAt;
 }

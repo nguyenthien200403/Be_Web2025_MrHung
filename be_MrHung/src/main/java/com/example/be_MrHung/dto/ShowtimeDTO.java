@@ -1,40 +1,20 @@
-package com.example.be_MrHung.models;
-
-
-import jakarta.persistence.*;
+package com.example.be_MrHung.dto;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "showtimes")
-public class Showtime {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "showtime_id")
+public class ShowtimeDTO {
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "movie_id")
-    private Movie movie;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "screen_id", nullable = false)
-    private Screen screen;
-
-    @Column(name = "start_time", nullable = false)
+    private Long movieId;
+    private Long screenId;
+    private String screenName;
+    private String cinemaName;
     private LocalDateTime startTime;
-
-    @Column(name = "end_time", nullable = false)
     private LocalDateTime endTime;
-
-    @Column(name = "price", nullable = false)
     private Double price;
-
-    @Column(name = "available_seats", nullable = false)
     private Integer availableSeats;
 
     // Constructors, getters, and setters
-    public Showtime() {
+    public ShowtimeDTO() {
     }
 
     public Long getId() {
@@ -45,20 +25,36 @@ public class Showtime {
         this.id = id;
     }
 
-    public Movie getMovie() {
-        return movie;
+    public Long getMovieId() {
+        return movieId;
     }
 
-    public void setMovie(Movie movie) {
-        this.movie = movie;
+    public void setMovieId(Long movieId) {
+        this.movieId = movieId;
     }
 
-    public Screen getScreen() {
-        return screen;
+    public Long getScreenId() {
+        return screenId;
     }
 
-    public void setScreen(Screen screen) {
-        this.screen = screen;
+    public void setScreenId(Long screenId) {
+        this.screenId = screenId;
+    }
+
+    public String getScreenName() {
+        return screenName;
+    }
+
+    public void setScreenName(String screenName) {
+        this.screenName = screenName;
+    }
+
+    public String getCinemaName() {
+        return cinemaName;
+    }
+
+    public void setCinemaName(String cinemaName) {
+        this.cinemaName = cinemaName;
     }
 
     public LocalDateTime getStartTime() {
@@ -92,5 +88,4 @@ public class Showtime {
     public void setAvailableSeats(Integer availableSeats) {
         this.availableSeats = availableSeats;
     }
-
 }

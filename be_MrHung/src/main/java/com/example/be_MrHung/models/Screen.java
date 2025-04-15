@@ -1,13 +1,12 @@
 package com.example.be_MrHung.models;
 
+
 import jakarta.persistence.*;
-import lombok.Data;
-import java.util.Set;
 
 @Entity
 @Table(name = "screens")
-@Data
 public class Screen {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer screenId;
@@ -16,18 +15,54 @@ public class Screen {
     @JoinColumn(name = "cinema_id", nullable = false)
     private Cinema cinema;
 
-    @Column(name = "screen_name", nullable = false, length = 50)
-    private String name;
+    @Column(name = "screen_name", nullable = false)
+    private String screenName;
 
-    @Column(name = "screen_type", length = 50)
-    private String type;
+    @Column(name = "screen_type")
+    private String screenType;
 
-    @Column(nullable = false)
+    @Column(name = "capacity", nullable = false)
     private Integer capacity;
 
-    @OneToMany(mappedBy = "screen")
-    private Set<Seat> seats;
+    // Getters and Setters
 
-    @OneToMany(mappedBy = "screen")
-    private Set<Showtime> showtimes;
+    public Integer getScreenId() {
+        return screenId;
+    }
+
+    public void setScreenId(Integer screenId) {
+        this.screenId = screenId;
+    }
+
+    public Cinema getCinema() {
+        return cinema;
+    }
+
+    public void setCinema(Cinema cinema) {
+        this.cinema = cinema;
+    }
+
+    public String getScreenName() {
+        return screenName;
+    }
+
+    public void setScreenName(String screenName) {
+        this.screenName = screenName;
+    }
+
+    public String getScreenType() {
+        return screenType;
+    }
+
+    public void setScreenType(String screenType) {
+        this.screenType = screenType;
+    }
+
+    public Integer getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
 }
