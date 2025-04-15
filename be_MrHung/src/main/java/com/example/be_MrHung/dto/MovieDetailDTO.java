@@ -1,20 +1,10 @@
-package com.example.be_MrHung.models;
-
-import jakarta.persistence.*;
-
+package com.example.be_MrHung.dto;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
-
-@Entity
-@Table(name = "movies")
-public class Movie {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class MovieDetailDTO {
     private Long movieId;
-
     private String title;
     private String description;
     private Integer duration;
@@ -23,21 +13,10 @@ public class Movie {
     private String posterUrl;
     private String trailerUrl;
     private Boolean isNowShowing;
-    private Date createdAt;
-    private Date updatedAt;
-
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
-    private Set<MovieGenre> genres = new HashSet<>();
-
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
-    private Set<MovieActor> actors = new HashSet<>();
-
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
-    private Set<MovieDirector> directors = new HashSet<>();
-
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
-    private Set<Showtime> showtimes = new HashSet<>();
-
+    private List<GenreDTO> genres;
+    private List<ActorDTO> actors;
+    private List<DirectorDTO> directors;
+    private List<ShowtimeDTO> showtimes;
 
     public Long getMovieId() {
         return movieId;
@@ -111,51 +90,35 @@ public class Movie {
         isNowShowing = nowShowing;
     }
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Set<MovieGenre> getGenres() {
+    public List<GenreDTO> getGenres() {
         return genres;
     }
 
-    public void setGenres(Set<MovieGenre> genres) {
+    public void setGenres(List<GenreDTO> genres) {
         this.genres = genres;
     }
 
-    public Set<MovieActor> getActors() {
+    public List<ActorDTO> getActors() {
         return actors;
     }
 
-    public void setActors(Set<MovieActor> actors) {
+    public void setActors(List<ActorDTO> actors) {
         this.actors = actors;
     }
 
-    public Set<MovieDirector> getDirectors() {
+    public List<DirectorDTO> getDirectors() {
         return directors;
     }
 
-    public void setDirectors(Set<MovieDirector> directors) {
+    public void setDirectors(List<DirectorDTO> directors) {
         this.directors = directors;
     }
 
-    public Set<Showtime> getShowtimes() {
+    public List<ShowtimeDTO> getShowtimes() {
         return showtimes;
     }
 
-    public void setShowtimes(Set<Showtime> showtimes) {
+    public void setShowtimes(List<ShowtimeDTO> showtimes) {
         this.showtimes = showtimes;
     }
 }

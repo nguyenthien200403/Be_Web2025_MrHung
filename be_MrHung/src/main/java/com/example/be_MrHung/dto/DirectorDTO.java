@@ -1,57 +1,32 @@
-package com.example.be_MrHung.models;
-
-import jakarta.persistence.*;
-
+package com.example.be_MrHung.dto;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
-@Entity
-@Table(name = "actors")
-public class Actor {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "actor_id")
-    private Long id;
-
-    @Column(nullable = false)
+public class DirectorDTO {
+    private Integer id;
     private String name;
-
-    @Column(columnDefinition = "TEXT")
     private String bio;
-
-    @Column(name = "date_of_birth")
     private Date dateOfBirth;
-
     private String nationality;
-
-    @Column(name = "created_at", updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    @OneToMany(mappedBy = "actor", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<MovieActor> movies = new HashSet<>();
-
-    // Constructors
-    public Actor() {
-        this.createdAt = new Date();
+    public DirectorDTO() {
     }
 
-    public Actor(String name, String bio, Date dateOfBirth, String nationality) {
-        this();
+    public DirectorDTO(Integer id, String name, String bio, Date dateOfBirth, String nationality, Date createdAt) {
+        this.id = id;
         this.name = name;
         this.bio = bio;
         this.dateOfBirth = dateOfBirth;
         this.nationality = nationality;
+        this.createdAt = createdAt;
     }
 
-    // Getters and Setters
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -94,14 +69,4 @@ public class Actor {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
-
-    public Set<MovieActor> getMovies() {
-        return movies;
-    }
-
-    public void setMovies(Set<MovieActor> movies) {
-        this.movies = movies;
-    }
-
-
 }
