@@ -7,7 +7,7 @@ public class ShowtimeDTO {
     private Long movieId;
     private Long screenId;
     private String screenName;
-    private String cinemaName;
+
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Double price;
@@ -47,14 +47,6 @@ public class ShowtimeDTO {
 
     public void setScreenName(String screenName) {
         this.screenName = screenName;
-    }
-
-    public String getCinemaName() {
-        return cinemaName;
-    }
-
-    public void setCinemaName(String cinemaName) {
-        this.cinemaName = cinemaName;
     }
 
     public LocalDateTime getStartTime() {
